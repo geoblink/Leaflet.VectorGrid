@@ -70,7 +70,7 @@ L.VectorGrid = L.GridLayer.extend({
 			renderer._features = {};
 		}
 
-		vectorTilePromise.then( function renderTile(vectorTile) {
+		vectorTilePromise.then(function renderTile(vectorTile) {
 
 			if (vectorTile.layers && vectorTile.layers.length !== 0) {
 
@@ -142,7 +142,15 @@ L.VectorGrid = L.GridLayer.extend({
 	
 			L.Util.requestAnimFrame(done.bind(coords, null, null));
 
-		}.bind(this));
+		}.bind(this), function (err) {
+			var errorCode = err && err.code
+			var abortErrorCode = window.DOMException && window.DOMException.ABORT_ERR
+			if (!(errorCode && abortErrorCode && (errorCode === abortErrorCode))) {
+        console.error(err)
+			} else {
+				// Abort happens all the time when we change zoom. No point in logging
+			}
+		});
 
 		return renderer.getContainer();
 	},
