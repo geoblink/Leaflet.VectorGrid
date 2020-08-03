@@ -225,7 +225,7 @@ L.VectorGrid = L.GridLayer.extend({
 	},
 
 	vtGeometryToLatLng: function(geometry, vtLayer, tileCoords) {
-		return this._map.unproject(this.vtGeometryToPoint(geometry, vtLayer, tileCoords));
+		return this._map.unproject(this.vtGeometryToPoint(geometry, vtLayer, tileCoords), tileCoords.z);
 	},
 
 	addUserLayer: function(userLayer, tileCoords) {
